@@ -28,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _errorMessage = null;
     });
 
-    final url = Uri.parse('http://10.56.8.249:5266/api/kullanici/register');
+    final url = Uri.parse('http://API ADRESİ YER ALMALI/api/kullanici/register');
 
     try {
       final response = await http.post(

@@ -1,27 +1,3 @@
-/*import 'package:flutter/material.dart';
-
-class CihazDetaySayfasi extends StatelessWidget {
-  final String cihazId;
-
-  CihazDetaySayfasi({required this.cihazId});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cihaz Detayları'),
-        backgroundColor: Colors.teal.shade700,
-      ),
-      body: Center(
-        child: Text(
-          'Cihaz ID: $cihazId',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-*/
 
 
 import 'dart:convert';
@@ -58,25 +34,6 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
   }
 
 
-  /* List<FlSpot> _generateSpots(List<FlSpot> originalSpots, double pixelPerInterval) {
-    List<FlSpot> newSpots = [];
-    double currentX = 0;
-
-    for (int i = 0; i < originalSpots.length; i++) {
-      newSpots.add(FlSpot(currentX, originalSpots[i].y));
-
-      if (i < originalSpots.length - 1) {
-        final timeDiff = originalSpots[i + 1].x - originalSpots[i].x;
-        if (timeDiff > 60000) { // 1 dakika (60,000 ms) fark varsa
-          currentX += pixelPerInterval; // Sabit aralık artırılıyor
-        }
-      }
-    }
-
-    return newSpots;
-  }
-*/
-
   @override
   void initState() {
     super.initState();
@@ -87,7 +44,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
       print('API\'den veri çekiliyor...');
 
       // Cihaz verileri API çağrısı
-      final cihazResponse = await http.get(Uri.parse('http://10.56.8.249:5266/api/Cihaz/${widget.cihazId}'));
+      final cihazResponse = await http.get(Uri.parse('http://API ADRESİ YER ALMALI/api/Cihaz/${widget.cihazId}'));
 
       if (cihazResponse.statusCode == 200) {
         // JSON response'ı çözümle ve Map'e çevir
@@ -107,7 +64,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
       }
 
       // CihazRole verileri API çağrısı
-      final cihazRoleResponse = await http.get(Uri.parse('http://10.56.8.249:5266/api/CihazRole/${widget.cihazId}'));
+      final cihazRoleResponse = await http.get(Uri.parse('http://API ADRESİ YER ALMALI/api/CihazRole/${widget.cihazId}'));
 
       if (cihazRoleResponse.statusCode == 200) {
         // JSON response'ı çözümle
@@ -135,7 +92,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
       }
 
       // CihazGet verileri API çağrısı
-      final cihazGetResponse = await http.get(Uri.parse('http://10.56.8.249:5266/api/CihazGet/${widget.cihazId}'));
+      final cihazGetResponse = await http.get(Uri.parse('http://API ADRESİ YER ALMALI/api/CihazGet/${widget.cihazId}'));
 
       if (cihazGetResponse.statusCode == 200) {
         Map<String, dynamic> cihazGetData = jsonDecode(cihazGetResponse.body);
@@ -164,7 +121,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
   Future<void> _updateSicaklik(double newSicaklik) async {
     try {
       final response = await http.put(
-        Uri.parse('http://10.56.8.249:5266/api/Cihaz/${widget.cihazId}'), // widget.cihazId kullanılıyor
+        Uri.parse('http://API ADRESİ YER ALMALI/api/Cihaz/${widget.cihazId}'), // widget.cihazId kullanılıyor
         headers: {
           'Content-Type': 'application/json',
         },
@@ -189,7 +146,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
 
       // CihazGet güncelleme isteği
       final cihazGetResponse = await http.put(
-        Uri.parse('http://10.56.8.249:5266/api/CihazGet/${widget.cihazId}'),
+        Uri.parse('http://API ADRESİ YER ALMALI/api/CihazGet/${widget.cihazId}'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'cihazGetId': _cihazGetData!['cihazGetId'],
@@ -236,10 +193,10 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
       };
 
       print('Gönderilen JSON: ${jsonEncode(updatedData)}');
-      print('PUT URL: http://10.56.8.249:5266/api/CihazRole/${widget.cihazId}');
+      print('PUT URL: http://API ADRESİ YER ALMALI/api/CihazRole/${widget.cihazId}');
 
       final response = await http.put(
-        Uri.parse('http://10.56.8.249:5266/api/CihazRole/${widget.cihazId}'),
+        Uri.parse('http://API ADRESİ YER ALMALI/api/CihazRole/${widget.cihazId}'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -271,7 +228,7 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
       print('Güncellenen role verisi: ${jsonEncode(updatedRoleDataGet)}');
 
       final responseCihazGetRole = await http.put(
-        Uri.parse('http://10.56.8.249:5266/api/CihazGet/${widget.cihazId}'),
+        Uri.parse('http://API ADRESİ YER ALMALI/api/CihazGet/${widget.cihazId}'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -513,48 +470,6 @@ class _CihazDetaySayfasiState extends State<CihazDetaySayfasi> {
                           ),
                         ),
                       )
-
-
-
-
-
-
-
-
-
-
-
-                    /*LineChart(
-                      LineChartData(
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: _temperatureSpots, // Sıcaklık verilerini gösterir
-                            isCurved: true,
-                            color: Colors.blue, // Burada 'colors' yerine 'color' kullanıldı
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(show: false),
-                          ),
-                        ],
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: true),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: true),
-                          ),
-                        ),
-                        gridData: FlGridData(show: true),
-                        borderData: FlBorderData(
-                          show: true,
-                          border: Border.all(
-                            color: const Color(0xff37434d),
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                    ),*/
-
-
 
 
 

@@ -1,116 +1,3 @@
-/*import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter/material.dart';
-
-class CihazEkleSayfasi extends StatefulWidget {
-  final Function(String) cihazEkleCallback;
-
-  CihazEkleSayfasi(this.cihazEkleCallback);
-
-  @override
-  _CihazEkleSayfasiState createState() => _CihazEkleSayfasiState();
-}
-
-class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
-  final TextEditingController _cihazIdController = TextEditingController();
-  final TextEditingController _cihazAdiController = TextEditingController();
-
-  Future<void> cihazEkle() async {
-    final cihazAdi = _cihazAdiController.text.trim();
-    final cihazId = int.tryParse(_cihazIdController.text.trim());
-
-    if (cihazAdi.isNotEmpty && cihazId != null) {
-      try {
-        // API'ye cihaz bilgilerini gönder
-        final response = await http.post(
-          Uri.parse('http://192.168.1.147:5266/api/CihazGet'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, dynamic>{
-            'cihazGet': null,  // Bu alanı API'nin gerektirdiği şekilde doldurun
-            'cihazId': cihazId,
-            'durum': 0, // Başlangıçta cihaz durumu pasif
-            'setSicaklik': '24', // Varsayılan sıcaklık değeri string olarak gönderiliyor
-            'role1': 0,
-            'role2': 0,
-            'role3': 0,
-            'role4': 0,
-            'zaman': DateTime.now().toIso8601String(), // Şu anki zaman
-          }),
-        );
-
-        print('Response status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-
-        if (response.statusCode == 201) {
-          widget.cihazEkleCallback(cihazAdi); // Yeni cihaz ismini listeye ekle
-          Navigator.pop(context, cihazAdi); // Sayfayı kapat
-        } else {
-          // API çağrısı başarısız olduysa hata göster
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Cihaz ekleme başarısız oldu. Lütfen tekrar deneyin.'),
-          ));
-        }
-      } catch (e) {
-        print('Exception caught: $e');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Bir hata oluştu: $e'),
-        ));
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Lütfen geçerli bir cihaz ID ve adı girin.'),
-      ));
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cihaz Ekle'),
-        backgroundColor: Colors.teal.shade700,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _cihazIdController,
-              decoration: InputDecoration(
-                labelText: 'Cihaz ID',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _cihazAdiController,
-              decoration: InputDecoration(
-                labelText: 'Cihaz Adı',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: cihazEkle,
-              child: Text('Cihazı Ekle'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                backgroundColor: Colors.teal.shade700,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-*/
-
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -142,7 +29,7 @@ class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
       try {
         // Cihazı API'ye ekleyin
         final cihazResponse = await http.post(
-          Uri.parse('http://10.56.8.249:5266/api/Cihaz'),
+          Uri.parse('http://API ADRESİ YER ALMALI/api/Cihaz'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -155,7 +42,7 @@ class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
         );
 
         final response = await http.post(
-          Uri.parse('http://10.56.8.249:5266/api/CihazGet'),
+          Uri.parse('http://API ADRESİ YER ALMALI/api/CihazGet'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -175,7 +62,7 @@ class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
         if (response.statusCode == 201) {
           // Cihaz Kullanıcı ekleme API'si
           final cihazKullaniciResponse = await http.post(
-            Uri.parse('http://10.56.8.249:5266/api/CihazKullanici'),
+            Uri.parse('http://API ADRESİ YER ALMALI/api/CihazKullanici'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -191,7 +78,7 @@ class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
           // Cihaz Set API'si
 
           final cihazSetResponse = await http.post(
-            Uri.parse('http://10.56.8.249:5266/api/CihazSet'),
+            Uri.parse('http://API ADRESİ YER ALMALI/api/CihazSet'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -211,7 +98,7 @@ class _CihazEkleSayfasiState extends State<CihazEkleSayfasi> {
 
           // Cihaz Role API'si
           final cihazRoleResponse = await http.post(
-            Uri.parse('http://10.56.8.249:5266/api/CihazRole'),
+            Uri.parse('http://API ADRESİ YER ALMALI/api/CihazRole'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
